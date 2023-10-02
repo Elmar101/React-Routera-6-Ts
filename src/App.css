@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: grey;
 }
 
 .App-logo {
@@ -35,4 +36,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+a{
+  text-decoration: none;
+}
+
+.active {
+  color: red;
+  background: green;
+}
+
+.homeActive {
+  background: yellow;
+  color: blue;
 }
