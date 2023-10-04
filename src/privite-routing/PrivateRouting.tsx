@@ -15,10 +15,9 @@ const PrivateRouting: React.FC<IPrivateRouting> = ({children}) => {
   }
   return (
     <>
-      <div style={{background: "yellow"}}>Private Routing</div>
       {children}
     </>
   )
 }
 
-export default PrivateRouting
+export default PrivateRouting;
