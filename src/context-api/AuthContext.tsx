@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export interface IAuth {
   name: string;
@@ -21,7 +21,12 @@ const AuthSetStateContext = createContext<React.Dispatch<React.SetStateAction<IA
 export const AuthContextProvider: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => {
-  const [state, setState] = useState(defaultValue);
+  const defaultStateValue:IAuth = JSON.parse(localStorage.getItem("user") as string) || defaultValue;
+  const [state, setState] = useState(defaultStateValue);
+  
+  useEffect(()=>{
+    localStorage.setItem("user", JSON.stringify(state));
+  }, [state]);
 
   return (
     <AuthStateContext.Provider value={state}>
