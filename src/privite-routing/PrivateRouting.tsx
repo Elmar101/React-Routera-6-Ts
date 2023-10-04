@@ -8,7 +8,7 @@ interface IPrivateRouting {
 const PrivateRouting: React.FC<IPrivateRouting> = ({children}) => {
   const {isLogined} = useAuthStateContext();
   if(!isLogined){
-    return <Navigate to="/auth" />
+    return <Navigate to="/login" />
   }
   return (
     <>

@@ -25,7 +25,7 @@ function App() {
             <Route index={true} element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/news" element={<NewsPage />} />
-            
+
             <Route path="/blog" element={<BlogLayoutPage />} >
               {/* <Route index={true} element={<BlogPage />} />  =  <Route path="" element={<BlogPage />} />*/}
               <Route index={true} element={<BlogPage />} />
@@ -44,8 +44,8 @@ function App() {
           <Route path="profile" element={<PrivateRouting>
             <ProfilePage/>
           </PrivateRouting>} />
-          <Route path="/auth" element={<AuthLayoutPage/>}>
-            <Route path="login" element={<LoginPage/>} />
+          <Route path="/login"  element={<AuthLayoutPage/>}>
+            <Route index={true} element={<LoginPage/>} />
           </Route>
         </Routes>
       </div>

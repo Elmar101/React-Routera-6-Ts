@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-interface IAuth {
+export interface IAuth {
   name: string;
   password: string;
   isLogined: boolean;
@@ -8,16 +8,15 @@ interface IAuth {
 }
 
 const defaultValue: IAuth = {
-  name: "Elmar",
-  password: "123",
+  name: "",
+  password: "",
   isLogined: false,
-  token: "a",
+  token: "",
 };
 
 const AuthStateContext = createContext<IAuth>(defaultValue);
-const AuthSetStateContext = createContext<
-  React.Dispatch<React.SetStateAction<IAuth>> | undefined
->(undefined);
+
+const AuthSetStateContext = createContext<React.Dispatch<React.SetStateAction<IAuth>> | undefined>(undefined);
 
 export const AuthContextProvider: React.FC<{ children?: React.ReactNode }> = ({
   children,
@@ -33,13 +32,13 @@ export const AuthContextProvider: React.FC<{ children?: React.ReactNode }> = ({
 
 export const useAuthStateContext = (): IAuth => {
     const user = useContext(AuthStateContext);
-    if(!user){throw new Error("useUserStateContext was called outside of the AuthStateContext provider");}
+    if(!user){throw new Error("useAuthStateContext was called outside of the AuthStateContext provider");}
     return user;
 }
 
 export const useAuthSetStateContext = (): React.Dispatch<React.SetStateAction<IAuth>> => {
     const setUser = useContext(AuthSetStateContext);
-    if(!setUser){throw new Error("useUserSetStateContext was called outside of the AuthSetStateContext provider");}
+    if(!setUser){throw new Error("useAuthSetStateContext was called outside of the AuthSetStateContext provider");}
     return setUser;
 };
 
