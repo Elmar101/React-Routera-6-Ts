@@ -5,7 +5,9 @@ export interface IAuth {
   password: string;
   isLogined: boolean;
   token: string;
-}
+};
+
+interface IProps { children?: React.ReactNode }
 
 const defaultValue: IAuth = {
   name: "",
@@ -18,12 +20,11 @@ const AuthStateContext = createContext<IAuth>(defaultValue);
 
 const AuthSetStateContext = createContext<React.Dispatch<React.SetStateAction<IAuth>> | undefined>(undefined);
 
-export const AuthContextProvider: React.FC<{ children?: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthContextProvider: React.FC<IProps> = ({children}) => {
   const defaultStateValue:IAuth = JSON.parse(localStorage.getItem("user") as string) || defaultValue;
+
   const [state, setState] = useState(defaultStateValue);
-  
+
   useEffect(()=>{
     localStorage.setItem("user", JSON.stringify(state));
   }, [state]);

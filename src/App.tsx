@@ -10,7 +10,7 @@ import BlogLayoutPage from "./pages/blog-page/index";
 import NotFoundPage from "./pages/page/NotFoundPage";
 import NotFoundPageForBlog from "./pages/blog-page/NotFoundPageForBlog";
 import PrivateRouting from "./privite-routing/PrivateRouting";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./pages/page/ProfilePage";
 import AuthLayoutPage from "./pages/auth-page";
 import LoginPage from "./pages/auth-page/LoginPage";
 import HomeLayout from "./pages/page";
@@ -37,13 +37,14 @@ function App() {
               {/* only blog nested page Not Fount , if there is not this not found page work NotFoundPage*/}
               <Route path="*" element={<NotFoundPageForBlog/>} />
             </Route>
+
+            {/*Private Route */}
+            <Route path="profile" element={<PrivateRouting> <ProfilePage/> </PrivateRouting>} />
+
             <Route path="*" element={<NotFoundPage/>} />
           </Route>
 
-          {/*Private Route */}
-          <Route path="profile" element={<PrivateRouting>
-            <ProfilePage/>
-          </PrivateRouting>} />
+        
           <Route path="/login"  element={<AuthLayoutPage/>}>
             <Route index={true} element={<LoginPage/>} />
           </Route>
