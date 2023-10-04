@@ -1,54 +1,52 @@
 import "./App.css";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import NewsPage from "./pages/NewsPage";
-import BlogPage from "./pages/blog/BlogPage";
-import CategoriesPage from "./pages/blog/CategoriesPage";
-import PostPage from "./pages/blog/PostPage";
-import BlogLayoutPage from "./pages/blog/index";
-import NotFoundPage from "./pages/NotFoundPage";
-import NotFoundPageForBlog from "./pages/blog/NotFoundPageForBlog";
+import HomePage from "./pages/page/HomePage";
+import AboutPage from "./pages/page/AboutPage";
+import NewsPage from "./pages/page/NewsPage";
+import BlogPage from "./pages/blog-page/BlogPage";
+import CategoriesPage from "./pages/blog-page/CategoriesPage";
+import PostPage from "./pages/blog-page/PostPage";
+import BlogLayoutPage from "./pages/blog-page/index";
+import NotFoundPage from "./pages/page/NotFoundPage";
+import NotFoundPageForBlog from "./pages/blog-page/NotFoundPageForBlog";
+import PrivateRouting from "./privite-routing/PrivateRouting";
+import ProfilePage from "./pages/ProfilePage";
+import AuthLayoutPage from "./pages/auth-page";
+import LoginPage from "./pages/auth-page/LoginPage";
+import HomeLayout from "./pages/page";
+import PostDetail from "./pages/blog-page/PostDetail";
 
 function App() {
   return (
     <>
-      <div>
-        <nav>
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "homeActive" : "")}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/about"
-            style={({ isActive }) => ({
-              background: isActive ? "blue" : "transparent",
-            })}
-          >
-            About
-          </NavLink>
-          <NavLink to="/news">
-            {({ isActive }) => <>News {isActive && 'Aktiv'}</>}
-          </NavLink>
-          <NavLink to='/blog'> Blog </NavLink>
-        </nav>
-      </div>
-
       <div className="App">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/blog" element={<BlogLayoutPage />} >
-             {/* <Route index={true} element={<BlogPage />} />  =  <Route index={true} element={<BlogPage />} />*/}
-            <Route index={true} element={<BlogPage />} />
-            <Route path="categories" element={<CategoriesPage/>} />
-            <Route path="post/:url" element={<PostPage/>} />
-            <Route path="*" element={<NotFoundPageForBlog/>} />
+          <Route path="/" element={<HomeLayout/>}>
+            <Route index={true} element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/news" element={<NewsPage />} />
+            
+            <Route path="/blog" element={<BlogLayoutPage />} >
+              {/* <Route index={true} element={<BlogPage />} />  =  <Route path="" element={<BlogPage />} />*/}
+              <Route index={true} element={<BlogPage />} />
+              <Route path="categories" element={<CategoriesPage/>} />
+              <Route path="post" element={<PostPage/>} >
+                <Route path=":id" element={<PostDetail/>} />
+              </Route>
+
+              {/* only blog nested page Not Fount , if there is not this not found page work NotFoundPage*/}
+              <Route path="*" element={<NotFoundPageForBlog/>} />
+            </Route>
+            <Route path="*" element={<NotFoundPage/>} />
           </Route>
-          <Route path="*" element={<NotFoundPage/>} />
+
+          {/*Private Route */}
+          <Route path="profile" element={<PrivateRouting>
+            <ProfilePage/>
+          </PrivateRouting>} />
+          <Route path="/auth" element={<AuthLayoutPage/>}>
+            <Route path="login" element={<LoginPage/>} />
+          </Route>
         </Routes>
       </div>
     </>
