@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuthStateContext } from "../context-api/AuthContext";
-import { LocationState, Location } from "../models/ILocation";
+import { LocationState, Location } from "../models/Location";
 
 interface IPrivateRouting {
   children: React.ReactNode;

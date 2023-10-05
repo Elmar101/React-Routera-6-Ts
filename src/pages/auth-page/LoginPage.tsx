@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IAuth, useAuthSetStateContext, useAuthStateContext } from "../../context-api/AuthContext";
-import { LocationState, Location } from "../../models/ILocation";
+import { LocationState, Location } from "../../models/Location";
 
 const LoginPage = () => {
   const [state, setState] = useState<Pick<IAuth , 'name'| 'password'> >({name: '', password: ''});
@@ -12,7 +12,7 @@ const LoginPage = () => {
   const setUser = useAuthSetStateContext();
 
   const handleChange = (name: string , value: string) => setState({...state, [name]: value});
-  
+
   const onSubmit = () => {
     if(state.name && state.password) {
       setUser({...state, isLogined: true, token: "Bearer aaa"});

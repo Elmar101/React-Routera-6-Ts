@@ -1,4 +1,4 @@
-import { useRoutes, RouteObject } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import HomeLayout from "../pages/page";
 import HomePage from "../pages/page/HomePage";
 import AboutPage from "../pages/page/AboutPage";
@@ -14,11 +14,12 @@ import PostDetail from "../pages/blog-page/PostDetail";
 import PostPage from "../pages/blog-page/PostPage";
 import BlogPage from "../pages/blog-page/BlogPage";
 import AuthLayoutPage from "../pages/auth-page/index";
+import { TypeRouteObject } from "../models/Routes";
 
-const routes: RouteObject[] = [
+const routes: TypeRouteObject[] = [
   {
     path: "/",
-    element: <HomeLayout/>,
+    element: <HomeLayout />,
     children: [
       { index: true, element: <HomePage /> },
       { path: "/about", element: <AboutPage /> },
@@ -26,32 +27,49 @@ const routes: RouteObject[] = [
       {
         path: "/blog",
         element: <BlogLayoutPage />,
+        // auth: true,
         children: [
           { index: true, element: <BlogPage /> },
           { path: "categories", element: <CategoriesPage /> },
-          { path: "post", element: <PostPage /> },
-          { path: ":id", element: <PostDetail /> },
-          { path: "*", element: <NotFoundPage /> },
+          {
+            path: "post",
+            element: <PostPage />,
+            children: [
+              {
+                path: ":id",
+                element: <PostDetail />,
+                auth: true,
+              },
+            ],
+          },
+          { path: "*", element: <NotFoundPageForBlog /> },
         ],
       },
       {
         path: "profile",
-        element: (
-          <PrivateRouting>
-            <ProfilePage />
-          </PrivateRouting>
-        ),
+        element: <ProfilePage />,
+        auth: true,
       },
-      { path: "*", element: <NotFoundPageForBlog /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
   {
     path: "/login",
     element: <AuthLayoutPage />,
+
     children: [{ index: true, element: <LoginPage /> }],
   },
-];
+] as TypeRouteObject[];
+
+const authMap = (routes: TypeRouteObject[]) => {
+  return routes.map((route: TypeRouteObject) => {
+    if (route.auth)
+      route.element = <PrivateRouting>{route.element}</PrivateRouting>;
+    if (route.children) route.children = authMap(route.children);
+    return route;
+  });
+};
 
 export const useCustomRoutes = () => {
-  return useRoutes(routes);
+  return useRoutes(authMap(routes));
 };
